@@ -51,14 +51,13 @@ if Meteor.isClient
         player = Players.find({id: "4"}).fetch()[0]
         addScore(player._id)
 
-      ###
+    "click #recipies"
       Meteor.call("getRecipies", 2, (err, res) ->
         if err?
           console.log "There was an error", err
         else
           console.log "Success! Data:", JSON.parse(res.content).results
       )
-      ###
 
 if Meteor.isServer
   Meteor.methods 
