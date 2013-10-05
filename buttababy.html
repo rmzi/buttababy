@@ -11,13 +11,13 @@
   {{#each players}}
     {{> player}}
   {{/each}}
+  <br>
   <button id="reset">Reset</button>
   <div class='clock'>{{clock}}</div>
 </template>
 
 <template name="player">
-  <div>Player {{id}}</div>
-  <div>{{score}}</div>
+  <h3>Player {{id}} ({{score}} tbs)</h3>
   <div class='score'></div>
 </template>
 
