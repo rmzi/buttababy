@@ -11,7 +11,7 @@
   {{#each players}}
     {{> player}}
   {{/each}}
-  <button id="start">START</button>
+  <button id="reset">Reset</button>
   <div class='clock'>{{clock}}</div>
 </template>
 
@@ -24,23 +24,26 @@
   <h1>Player 1</h1>
   <button id="ready">Ready</button>
   <button id="recipies">Get Recipies</button>
-  <div>{{recipies}}</div>
+  <p>{{recipe}}</p>
 </template>
 
 <template name="player2">
   <h1>Player 2</h1>
   <button id="ready">Ready</button>
   <button id="recipies">Get Recipies</button>
+  <p>{{recipe}}</p>
 </template>
   
 <template name="player3">
   <h1>Player 3</h1>
   <button id="ready">Ready</button>
   <button id="recipies">Get Recipies</button>
+  <p>{{recipe}}</p>
 </template>
 
 <template name="player4">
   <h1>Player 4</h1>
   <button id="ready">Ready</button>
   <button id="recipies">Get Recipies</button>
+  <p>{{recipe}}</p>
 </template>

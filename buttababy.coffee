@@ -15,8 +15,23 @@ if Meteor.isClient
   ## Room ##
   Template.room.players = ->
     Players.find {}
-    
+
+  Template.room.events
+    "click #reset": ->
+      player1 = Players.find({id: "1"}).fetch()[0]
+      player2 = Players.find({id: "2"}).fetch()[0]
+      player3 = Players.find({id: "3"}).fetch()[0]
+      player4 = Players.find({id: "4"}).fetch()[0]
+
+      Players.update(player1._id, {$set: {score: 0}});
+      Players.update(player2._id, {$set: {score: 0}});
+      Players.update(player3._id, {$set: {score: 0}});
+      Players.update(player4._id, {$set: {score: 0}});      
+
   ## Player 1 ##
+  Template.player1.recipe = ->
+    return Session.get("recipe")
+
   Template.player1.events
     "click #ready": ->
       console.log "I'm ready!"
@@ -25,7 +40,23 @@ if Meteor.isClient
         player = Players.find({id: "1"}).fetch()[0]
         addScore(player._id)
 
+    "click #recipies": ->
+      Meteor.call("getRecipies", 2, (err, res) ->
+        if err?
+          console.log "There was an error", err
+        else
+          results = JSON.parse(res.content).results
+          recipie = ""
+          for result in results
+            recipie = recipie + ", " + result.summary.title
+
+          Session.set("recipe", recipie)
+      )
+
   ## Player 2 ##
+  Template.player2.recipe = ->
+    return Session.get("recipe")
+
   Template.player2.events
     "click #ready": ->
       console.log "I'm ready!"
@@ -34,7 +65,23 @@ if Meteor.isClient
         player = Players.find({id: "2"}).fetch()[0]
         addScore(player._id)
 
+    "click #recipies": ->
+      Meteor.call("getRecipies", 2, (err, res) ->
+        if err?
+          console.log "There was an error", err
+        else
+          results = JSON.parse(res.content).results
+          recipie = ""
+          for result in results
+            recipie = recipie + ", " + result.summary.title
+
+          Session.set("recipe", recipie)
+      )
+
   ## Player 3 ##
+  Template.player3.recipe = ->
+    return Session.get("recipe")
+
   Template.player3.events
     "click #ready": ->
       console.log "I'm ready!"
@@ -43,7 +90,23 @@ if Meteor.isClient
         player = Players.find({id: "3"}).fetch()[0]
         addScore(player._id)
 
+    "click #recipies": ->
+      Meteor.call("getRecipies", 2, (err, res) ->
+        if err?
+          console.log "There was an error", err
+        else
+          results = JSON.parse(res.content).results
+          recipie = ""
+          for result in results
+            recipie = recipie + ", " + result.summary.title
+
+          Session.set("recipe", recipie)
+      )
+
   ## Player 4 ##
+  Template.player4.recipe = ->
+    return Session.get("recipe")
+
   Template.player4.events
     "click #ready": ->
       console.log "I'm ready!"
@@ -52,44 +115,22 @@ if Meteor.isClient
         player = Players.find({id: "4"}).fetch()[0]
         addScore(player._id)
 
-    "click #recipies"
+    "click #recipies": ->
       Meteor.call("getRecipies", 2, (err, res) ->
         if err?
           console.log "There was an error", err
         else
-          console.log "Success! Data:", JSON.parse(res.content).results
+          results = JSON.parse(res.content).results
+          recipie = ""
+          for result in results
+            recipie = recipie + ", " + result.summary.title
+
+          Session.set("recipe", recipie)
       )
-
-    "click #shake": ->
-      player = Players.find({id: "1"}).fetch()[0]
-      console.log player._id
-      Players.update(player._id, {$inc: {score: 1}});
-
-      console.log "Player Score:", player.score
-
-  Template.room.clock = ->
-    clock = 30
-    return  if not clock or clock is 0
-    
-    # format into M:SS
-    min = Math.floor(clock / 60)
-    sec = clock % 60
-    min + ":" + ((if sec < 10 then ("0" + sec) else sec))
-
-  Template.room.events
-    'click #start': ->
-      console.log 'click'
-
-      # interval = Meteor.setInterval(->
-      #   clock -= 1
-      #   Games.update game_id,
-      #     $set:
-      #       clock: clock
-      # , 1000)
 
 if Meteor.isServer
   Meteor.methods 
-    getRecipies: (butterAmt) ->
+    getRecipies: (num) ->
       @unblock()
 
       result = HTTP.call("GET", "http://api.pearson.com/v2/foodanddrink/recipes?limit=5&search=butter&apikey=pl13QLTr4XCoOuSNW2Kp9O5wP5SINfeE"
