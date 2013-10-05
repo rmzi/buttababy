@@ -10,7 +10,8 @@ body{
   margin-left: -270px;
 }
 
-.score div, .test div {
+.score div{
+  height: 30px;
   font: 10px sans-serif;
   background-color: orange;
   text-align: right;
