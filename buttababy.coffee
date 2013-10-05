@@ -18,6 +18,12 @@ if Meteor.isClient
   ## Player 1 ##
   Template.player1.events
     "click #ready": ->
+      Meteor.call("getRecipies", 2, (err, res) ->
+        if err?
+          console.log "There was an error", err
+        else
+          console.log "Success! Data:", JSON.parse(res.content).results
+      )
 
 
     "click #shake": ->
@@ -28,6 +34,17 @@ if Meteor.isClient
       console.log "Player Score:", player.score
 
 if Meteor.isServer
+  Meteor.methods 
+    getRecipies: (butterAmt) ->
+      @unblock()
+
+      result = HTTP.call("GET", "http://api.pearson.com/v2/foodanddrink/recipes?limit=5&search=butter&apikey=pl13QLTr4XCoOuSNW2Kp9O5wP5SINfeE"
+        #params:
+         # user: userId
+      )
+      
+      return result
+
   Meteor.startup ->
     if Players.find().count() is 0
       names = ["1", "2", "3", "4"]
