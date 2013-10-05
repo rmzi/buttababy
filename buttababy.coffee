@@ -1,3 +1,4 @@
+Game = new Meteor.Collection("game")
 Players = new Meteor.Collection("players")
 
 addScore = (id) ->
@@ -59,6 +60,33 @@ if Meteor.isClient
           console.log "Success! Data:", JSON.parse(res.content).results
       )
 
+    "click #shake": ->
+      player = Players.find({id: "1"}).fetch()[0]
+      console.log player._id
+      Players.update(player._id, {$inc: {score: 1}});
+
+      console.log "Player Score:", player.score
+
+  Template.room.clock = ->
+    clock = 30
+    return  if not clock or clock is 0
+    
+    # format into M:SS
+    min = Math.floor(clock / 60)
+    sec = clock % 60
+    min + ":" + ((if sec < 10 then ("0" + sec) else sec))
+
+  Template.room.events
+    'click #start': ->
+      console.log 'click'
+
+      # interval = Meteor.setInterval(->
+      #   clock -= 1
+      #   Games.update game_id,
+      #     $set:
+      #       clock: clock
+      # , 1000)
+
 if Meteor.isServer
   Meteor.methods 
     getRecipies: (butterAmt) ->
@@ -83,5 +111,4 @@ if Meteor.isServer
           score: 0
 
         i++
-
 # code to run on server at startup
