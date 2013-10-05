@@ -1,7 +1,20 @@
 /* CSS declarations go here */
+body{
+  background: #eee;
+}
+
 .logo{
   position: relative;
   left: 50%;
   margin-top: 40px;
   margin-left: -270px;
+}
+
+.score div, .test div {
+  font: 10px sans-serif;
+  background-color: orange;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
 }

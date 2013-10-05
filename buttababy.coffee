@@ -28,6 +28,14 @@ if Meteor.isClient
       Players.update(player3._id, {$set: {score: 0}});
       Players.update(player4._id, {$set: {score: 0}});      
 
+  Template.player.rendered = ->
+    console.log @.find('.score')
+    data = @.data.score
+    bar = d3.select(@.find('.score'))
+    
+    bar.append('div')
+      .style('width', data + 'px')
+
   ## Player 1 ##
   Template.player1.recipe = ->
     return Session.get("recipe")
