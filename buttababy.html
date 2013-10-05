@@ -1,0 +1,38 @@
+<head>
+  <title>buttababy</title>
+</head>
+
+<body>
+  {{renderPage}}
+</body>
+
+<template name="room">
+  <h1>Welcome to Butta Baby</h1>
+  {{#each players}}
+    {{> player}}
+  {{/each}}
+  <button id="start">START</button>
+</template>
+
+<template name="player">
+  <div>Player {{id}}</div>
+  <div>{{score}}</div>
+</template>
+
+<template name="player1">
+  <h1>Player 1</h1>
+  <button id="ready">Ready</button>
+  <button id="shake">Shake, bro</button>
+</template>
+
+<template name="player2">
+  <h1>Player 2</h1>
+</template>
+  
+<template name="player3">
+  <h1>Player 3</h1>
+</template>
+
+<template name="player4">
+  <h1>Player 4</h1>
+</template>
