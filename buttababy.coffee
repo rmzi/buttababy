@@ -1,5 +1,8 @@
 Players = new Meteor.Collection("players")
 
+addScore = (id) ->
+  Players.update(id, {$inc: {score: 1}});
+
 if Meteor.isClient
   Meteor.Router.add
     "/": "room"
@@ -11,27 +14,51 @@ if Meteor.isClient
   ## Room ##
   Template.room.players = ->
     Players.find {}
-
-  Template.room.player1 = ->
-    #Players.
-
+    
   ## Player 1 ##
   Template.player1.events
     "click #ready": ->
+      console.log "I'm ready!"
+
+      $.shake callback: ->
+        player = Players.find({id: "1"}).fetch()[0]
+        addScore(player._id)
+
+  ## Player 2 ##
+  Template.player2.events
+    "click #ready": ->
+      console.log "I'm ready!"
+
+      $.shake callback: ->
+        player = Players.find({id: "2"}).fetch()[0]
+        addScore(player._id)
+
+  ## Player 3 ##
+  Template.player3.events
+    "click #ready": ->
+      console.log "I'm ready!"
+
+      $.shake callback: ->
+        player = Players.find({id: "3"}).fetch()[0]
+        addScore(player._id)
+
+  ## Player 4 ##
+  Template.player4.events
+    "click #ready": ->
+      console.log "I'm ready!"
+
+      $.shake callback: ->
+        player = Players.find({id: "4"}).fetch()[0]
+        addScore(player._id)
+
+      ###
       Meteor.call("getRecipies", 2, (err, res) ->
         if err?
           console.log "There was an error", err
         else
           console.log "Success! Data:", JSON.parse(res.content).results
       )
-
-
-    "click #shake": ->
-      player = Players.find({id: "1"}).fetch()[0]
-      console.log player._id
-      Players.update(player._id, {$inc: {score: 1}});
-
-      console.log "Player Score:", player.score
+      ###
 
 if Meteor.isServer
   Meteor.methods 
