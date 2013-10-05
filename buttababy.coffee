@@ -34,7 +34,7 @@ if Meteor.isClient
     bar = d3.select(@.find('.score'))
     
     bar.append('div')
-      .style('width', data + 'px')
+      .style('width', data*10 + 'px')
 
   ## Player 1 ##
   Template.player1.recipe = ->
